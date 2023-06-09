@@ -1,4 +1,4 @@
-MIYAGI'S SIDESCRIPTS
+Miyagi's Sidescripts
 
 A collection of small programs created by me, written in various languages.
 
