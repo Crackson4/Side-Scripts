@@ -1,6 +1,6 @@
 # Miyagi's Sidescripts
 
-A collection of small programs created by me, written in various languages.
+A collection of small programs created by me - Miyagi - written in various languages.
 
 ## Contact Info
 
