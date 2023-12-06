@@ -1,30 +1,36 @@
-import time  # module used to delay code execution
+import time
+
+player_options = {"r": "rock", "p": "paper", "s": "scissors"}
+keep_playing_options = {"y": True, "n": False}
+game_outcomes = (("r", "s"), ("s", "p"), ("p", "r"))
 
 
-def request_input(message: str, options):
-    # function for requesting input from player
+def request_input(message: str, options: dict) -> str:
     player_input = input(message).lower()
 
-    # handle unwanted input
-    while player_input not in options:
+    if player_input not in options:
         print("Invalid input.")
         time.sleep(1)
 
-        player_input = input(message).lower()
+        player_input = request_input(message)
 
     return player_input
 
 
-# let's play!
-playing = True
+def check_winner(player1: str, player2: str) -> str | None:
+    if player1 not in player_options or player2 not in player_options:
+        return None
 
-print("\vRock, Paper, Scissors!")
+    if (player1, player2) in game_outcomes:
+        return "PLAYER 1 WINS!"
+    elif (player2, player1) in game_outcomes:
+        return "PLAYER 2 WINS!"
+    else:
+        return "TIE!"
 
-while playing:
-    print("")  # just to make the game look prettier
 
-    # available options for player choices
-    player_options = {"r": "rock", "p": "paper", "s": "scissors"}
+def play_round():
+    print("")
 
     # ask for player choices
     player1 = request_input("Player 1 (r, p, s): ", player_options)
@@ -39,24 +45,23 @@ while playing:
     time.sleep(1)  # suspense...
     print("")
 
-    # who wins?
-    if player1 == player2:
-        print("TIE!")
-    elif player1 == "r":
-        print("PLAYER 1 WINS!" if player2 == "s" else "PLAYER 2 WINS!")
-    elif player1 == "s":
-        print("PLAYER 1 WINS!" if player2 == "p" else "PLAYER 2 WINS!")
-    elif player1 == "p":
-        print("PLAYER 1 WINS!" if player2 == "r" else "PLAYER 2 WINS!")
-    else:
-        print("I don't even know how this error is possible.")
+    print(check_winner(player1, player2))
 
     time.sleep(1)
 
-    # discontinue while loop if player doesn't want to continue
-    keep_playing_options = {"y": True, "n": False}
-    playing = keep_playing_options[
-        request_input("\nKeep playing (Y/N)? ", keep_playing_options)
-    ]
+    if keep_playing_options[
+        request_input("\nKeep playing (y/n)? ", keep_playing_options)
+    ]:
+        play_round()
+    else:
+        print("\vThanks for playing!")
 
-print("\vThanks for playing!")
+
+def main():
+    # let's play!
+    print("\vRock, Paper, Scissors!")
+    play_round()
+
+
+if __name__ == "__main__":
+    main()
